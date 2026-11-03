@@ -4,3 +4,4 @@
 .hero-bottom{justify-content:flex-start}.hero-bottom #scene-status{position:absolute;top:-35px;left:0;right:auto;text-align:left;max-width:230px}.hero-bottom button{margin-left:25px}.hero-label{max-width:175px;line-height:1.8}.hero-caption{bottom:145px}
 @media(max-width:560px){.hero-caption{bottom:150px}.hero-bottom #scene-status{font-size:8px;top:-30px;bottom:auto;max-width:190px}.hero-bottom button{margin-left:0}.hero-bottom{bottom:60px;gap:16px}.hero-label{max-width:160px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+@media(max-width:560px){.hero-caption{display:none}}
