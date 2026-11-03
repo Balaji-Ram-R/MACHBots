@@ -1,0 +1,5 @@
+Generated with the built-in image-generation tool, transparent-background mode.
+
+Create a premium website hero asset: one futuristic black humanoid robot character, full body from head to feet, front facing, slight three-quarter natural pose, both arms loosely angled out and down, elegant glossy black featureless visor face and dark graphite segmented armor with subtle matte violet rim lighting. Inspired by a sleek friendly NEXBOT-style robotic character, but original concept. High-end photorealistic 3D studio product render, immaculate reflections, sophisticated realistic material, slim athletic humanoid proportions, realistic five-finger mechanical hands. Character fills image vertically with ample margin all sides, isolated transparent background, no text, no logos, no scene, no floor plane, no graphic decorations. Intended to overlay on pale violet and white web hero.
+
+Project asset: dist/assets/hero-robot.webp
