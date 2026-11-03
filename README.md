@@ -1,20 +1,15 @@
 # Robogen Technologies
 
-Full-width Spline canvas hero with grey, white and matte violet styling. Robot rentals, use cases, approved media gallery and local enquiry builder.
+Robot rental showroom with a full-width local Three.js robot canvas. Grey, white and matte violet design.
 
-## Run
-Node 22+. Run npm ci, npm run build, npm run dev. Preview http://127.0.0.1:4173. Run npm test for page, navigation, contact, gallery and canvas integration checks.
+Run npm ci, npm run build, npm run dev. Preview http://127.0.0.1:4173. Run npm test for generated page, navigation, contact, gallery and renderer checks.
 
-## Edit
-- build.mjs generates pages and bundles the runtime with esbuild.
-- style-new.css is the stylesheet source, copied to dist/style.css on build.
-- scene.mjs loads the supplied Spline export into a native canvas, hides the original logo mesh group and renders responsive HTML ROBOGEN lettering behind the transparent scene. Exported interactions are retained, with global cursor events. Pause, reduced-motion and background-tab pause supported.
-- dist/app.js manages menu, accessible use-case tabs and enquiry preview/copy.
-- content.mjs holds contact details and approved gallery entries.
-- dist/assets/nexbot.gltf retains the supplied model; the live hero uses the splinecode export to retain authored interactions.
+- build.mjs generates pages and bundles robot-scene.mjs with esbuild.
+- robot-scene.mjs renders dist/assets/nexbot.gltf using Three.js. The supplied GLTF has geometry without Spline materials or events: black physical materials, studio lighting and cursor-following head rotation are recreated in this renderer. No Spline runtime, badge, or remote scene requests. Pause, reduced-motion, responsive framing and visibility controls included.
+- style-new.css is the design source, copied to dist/style.css.
+- dist/app.js handles menu, accessible tabs and enquiry preview/copy.
+- content.mjs holds business details and approved client gallery entries.
 
-Scene: https://prod.spline.design/2HkZDmfVk8kWAnOi/scene.splinecode
-Character by aximoris, CC BY 4.0. Attribution and adaptation notice in the footer. Spline's runtime badge is preserved. Website changes do not modify the editor document.
+Original robot character by aximoris under CC BY 4.0; attribution and adaptation notice retained in the footer.
 
-## Before public launch
-Add real business contact details and approved client media. The form previews and copies enquiries locally; it does not send or confirm a booking. Product references came from the supplied quotation; obtain publication approval. No client deployments are invented. Site remains private and noindex. Spline requires network access and WebGL/WebGPU; rental content remains usable when it fails.
+Contact details and client media await owner approval. The enquiry builder copies locally and does not send or confirm bookings. Site remains private and noindex. Model requires WebGL; rental content and navigation remain usable if it fails.
