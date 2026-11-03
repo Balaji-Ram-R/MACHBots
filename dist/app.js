@@ -17,15 +17,4 @@ document.querySelector('#edit-brief').addEventListener('click',()=>{result.hidde
 document.querySelector('#copy-brief').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(text.value);status.textContent='Copied. Share your brief with the team when you’re ready.';}catch{text.focus();text.select();status.textContent='Select and copy the brief above using your device’s copy command.';}});
 }
 
-// Embed the verified Community preview, never a guessed runtime URL.
-const stage=document.querySelector('#spline-stage');
-if(stage){
-const config=JSON.parse(document.querySelector('#business-config').textContent),button=document.querySelector('#toggle-spline'),status=document.querySelector('#spline-status');
-let frame=null,timer=null;
-function unload(){clearTimeout(timer);frame?.remove();frame=null;stage.classList.remove('scene-open');button.textContent='Load interactive robot';button.setAttribute('aria-pressed','false');status.textContent='3D is paused. You can explore the rental robots below.';}
-function load(){if(frame)return;const url=new URL(config.splinePreview);if(url.origin!=='https://app.spline.design')return;frame=document.createElement('iframe');frame.src=url.href;frame.title='Interactive NEXBOT robot by aximoris, made with Spline';frame.allow='fullscreen';frame.referrerPolicy='strict-origin-when-cross-origin';frame.setAttribute('allowfullscreen','');frame.addEventListener('load',()=>{clearTimeout(timer);status.textContent='Move your pointer inside the scene to explore. Rendering may take a moment.';});stage.append(frame);stage.classList.add('scene-open');button.textContent='Pause 3D';button.setAttribute('aria-pressed','true');status.textContent='Loading the interactive Spline scene…';timer=setTimeout(()=>{status.textContent='Still loading? Pause 3D or open the scene directly in Spline.';},20000);}
-button.addEventListener('click',()=>frame?unload():load());
-if(matchMedia('(min-width: 701px) and (prefers-reduced-motion: no-preference)').matches)load();
-matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',e=>{if(e.matches)unload();});
-}
 document.querySelectorAll('video').forEach(v=>v.addEventListener('play',()=>document.querySelectorAll('video').forEach(other=>{if(other!==v)other.pause();})));
