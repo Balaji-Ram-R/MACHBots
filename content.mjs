@@ -1,12 +1,12 @@
 export const business = {
-  name: 'Robogen Technologies',
+  name: 'MACH Bots',
   location: 'Bengaluru, India',
   email: '',
   phone: '',
   whatsapp: '',
   origin: 'https://robogen-robotics-showroom.marinebasin1.chatgpt.site',
-  splinePreview: 'https://app.spline.design/file/b5699b21-c899-49e4-93ea-c50ffc534501?view=preview',
-  splineSource: 'https://community.spline.design/file/615b9422-9985-43f6-8593-d7d7bc3b0be1',
+  splinePreview: 'https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode',
+  splineSource: 'https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode',
 };
 
 // Publish only media that the business has approved. No demo entries are presented as client work.
