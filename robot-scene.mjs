@@ -58,15 +58,15 @@ const initPixelMatrixBackground = () => {
   let isVisible = true;
 
   // Grid sizing: crisp pixel squares matching the reference image
-  const gap = 16;
-  const pixelSize = 3.5;
+  const gap = 15;
+  const pixelSize = 4.2;
   let cols = 0;
   let rows = 0;
 
   // Columns for matrix digital rain
   let columns = [];
 
-  // Dormant ambient pixels with gentle twinkling
+  // Dormant & clustered ambient pixels with gentle harmonic breathing
   let ambientPixels = [];
 
   // Interactive cursor state with buttery smooth inertia
@@ -76,6 +76,10 @@ const initPixelMatrixBackground = () => {
   let cursorY = -500;
   let hasInteracted = false;
   let globalTime = 0;
+
+  // Scroll velocity tracking for warp acceleration
+  let lastScrollY = window.scrollY || 0;
+  let scrollSpeed = 0;
 
   // Energy cell grid for decaying cursor trails
   let cellEnergy = [];
@@ -94,28 +98,50 @@ const initPixelMatrixBackground = () => {
     columns = [];
     for (let c = 0; c < cols; c++) {
       columns.push({
-        active: Math.random() < 0.28,
+        active: Math.random() < 0.35,
         headY: Math.random() * -rows,
-        speed: Math.random() * 0.22 + 0.12,
-        length: Math.floor(Math.random() * 14 + 6),
-        cooldown: Math.floor(Math.random() * 120 + 30),
-        colorType: Math.random() > 0.4 ? 'cyan' : Math.random() > 0.5 ? 'mint' : 'violet',
+        baseSpeed: Math.random() * 0.18 + 0.12,
+        speed: 0.2,
+        length: Math.floor(Math.random() * 16 + 8),
+        cooldown: Math.floor(Math.random() * 90 + 20),
+        colorType: Math.random() > 0.45 ? 'mint' : Math.random() > 0.5 ? 'cyan' : 'emerald',
       });
     }
 
-    // Initialize ambient background pixels
+    // Initialize ambient background pixels & clusters (matching the reference image)
     ambientPixels = [];
     const totalCells = cols * rows;
-    const ambientCount = Math.floor(totalCells * 0.12);
+    const ambientCount = Math.floor(totalCells * 0.18);
     for (let i = 0; i < ambientCount; i++) {
       ambientPixels.push({
         col: Math.floor(Math.random() * cols),
         row: Math.floor(Math.random() * rows),
-        baseAlpha: Math.random() * 0.12 + 0.04,
-        pulseSpeed: Math.random() * 1.5 + 0.8,
+        baseAlpha: Math.random() * 0.16 + 0.08,
+        pulseSpeed: Math.random() * 1.6 + 0.7,
         phase: Math.random() * Math.PI * 2,
-        colorType: Math.random() > 0.35 ? 'cyan' : 'mint',
+        colorType: Math.random() > 0.4 ? 'mint' : Math.random() > 0.4 ? 'cyan' : 'emerald',
       });
+    }
+
+    // Seed tech clusters / constellations
+    const clusterCount = Math.floor(cols * 0.45);
+    for (let k = 0; k < clusterCount; k++) {
+      const centerCol = Math.floor(Math.random() * cols);
+      const centerRow = Math.floor(Math.random() * rows);
+      const clusterLen = Math.floor(Math.random() * 5 + 3);
+      const isHorizontal = Math.random() > 0.4;
+      for (let s = 0; s < clusterLen; s++) {
+        const c = isHorizontal ? Math.min(cols - 1, centerCol + s) : centerCol;
+        const r = !isHorizontal ? Math.min(rows - 1, centerRow + s) : centerRow;
+        ambientPixels.push({
+          col: c,
+          row: r,
+          baseAlpha: Math.random() * 0.2 + 0.14,
+          pulseSpeed: Math.random() * 1.2 + 0.8,
+          phase: Math.random() * Math.PI * 2,
+          colorType: Math.random() > 0.3 ? 'mint' : 'cyan',
+        });
+      }
     }
 
     cellEnergy = new Float32Array(cols * rows);
@@ -127,29 +153,41 @@ const initPixelMatrixBackground = () => {
     resize();
   });
 
-  // Track cursor position
-  window.addEventListener(
-    'pointermove',
-    (e) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-      hasInteracted = true;
-    },
-    { passive: true }
-  );
+  // Track cursor position with capture to ensure event delivery through 3D canvas
+  const handlePointer = (e) => {
+    targetX = e.clientX;
+    targetY = e.clientY;
+    hasInteracted = true;
+  };
 
+  window.addEventListener('pointermove', handlePointer, { passive: true, capture: true });
+  window.addEventListener('pointerdown', handlePointer, { passive: true, capture: true });
   window.addEventListener('pointerleave', () => {
     hasInteracted = false;
   });
 
+  window.addEventListener(
+    'scroll',
+    () => {
+      const currentScrollY = window.scrollY || 0;
+      scrollSpeed = Math.min(Math.abs(currentScrollY - lastScrollY) * 0.06, 2.5);
+      lastScrollY = currentScrollY;
+    },
+    { passive: true }
+  );
+
   const getColor = (type, alpha) => {
     switch (type) {
       case 'mint':
+        return `rgba(118, 255, 215, ${alpha})`;
+      case 'emerald':
         return `rgba(46, 229, 157, ${alpha})`;
+      case 'teal':
+        return `rgba(32, 178, 170, ${alpha})`;
       case 'violet':
         return `rgba(180, 92, 255, ${alpha})`;
       case 'white':
-        return `rgba(255, 241, 251, ${alpha})`;
+        return `rgba(255, 255, 255, ${alpha})`;
       case 'cyan':
       default:
         return `rgba(75, 227, 255, ${alpha})`;
@@ -160,24 +198,27 @@ const initPixelMatrixBackground = () => {
     if (!isVisible) return;
     globalTime = time * 0.001;
 
+    // Decay scroll warp velocity back to 0
+    scrollSpeed *= 0.94;
+
     // Organic harmonic drift when idle
     if (!hasInteracted) {
-      targetX = width * 0.5 + Math.sin(globalTime * 0.45) * (width * 0.28);
-      targetY = height * 0.45 + Math.cos(globalTime * 0.6) * (height * 0.22);
+      targetX = width * 0.5 + Math.sin(globalTime * 0.42) * (width * 0.32);
+      targetY = height * 0.45 + Math.cos(globalTime * 0.55) * (height * 0.24);
     }
 
-    // Slow, luxurious cursor damping (0.04 lerp)
-    cursorX += (targetX - cursorX) * 0.04;
-    cursorY += (targetY - cursorY) * 0.04;
+    // Slow, luxurious cursor damping (0.05 lerp)
+    cursorX += (targetX - cursorX) * 0.05;
+    cursorY += (targetY - cursorY) * 0.05;
 
     ctx.clearRect(0, 0, width, height);
 
-    // 1. Render ambient subtle dormant pixels
+    // 1. Render ambient subtle dormant pixels and clusters
     for (let i = 0; i < ambientPixels.length; i++) {
       const p = ambientPixels[i];
-      const pulse = Math.sin(globalTime * p.pulseSpeed + p.phase) * 0.05 + p.baseAlpha;
+      const pulse = Math.sin(globalTime * p.pulseSpeed + p.phase) * 0.07 + p.baseAlpha;
       if (pulse > 0.02) {
-        ctx.fillStyle = getColor(p.colorType, Math.min(pulse, 0.22));
+        ctx.fillStyle = getColor(p.colorType, Math.min(pulse, 0.45));
         ctx.fillRect(p.col * gap, p.row * gap, pixelSize, pixelSize);
       }
     }
@@ -187,7 +228,7 @@ const initPixelMatrixBackground = () => {
       const col = columns[c];
 
       if (col.active) {
-        col.headY += col.speed;
+        col.headY += col.baseSpeed + scrollSpeed;
 
         const startRow = Math.max(0, Math.floor(col.headY - col.length));
         const endRow = Math.min(rows, Math.floor(col.headY));
@@ -196,9 +237,9 @@ const initPixelMatrixBackground = () => {
           const distFromHead = col.headY - r;
           if (distFromHead >= 0 && distFromHead <= col.length) {
             const progress = 1 - distFromHead / col.length;
-            const isHead = distFromHead < 1.2;
+            const isHead = distFromHead < 1.1;
 
-            const alpha = isHead ? 0.62 : progress * 0.42;
+            const alpha = isHead ? 0.92 : progress * 0.55;
             const colorType = isHead ? 'white' : col.colorType;
 
             ctx.fillStyle = getColor(colorType, alpha);
@@ -209,22 +250,22 @@ const initPixelMatrixBackground = () => {
         if (col.headY - col.length > rows) {
           col.active = false;
           col.headY = Math.random() * -10 - 2;
-          col.cooldown = Math.floor(Math.random() * 80 + 20);
+          col.cooldown = Math.floor(Math.random() * 70 + 15);
         }
       } else {
         col.cooldown--;
         if (col.cooldown <= 0) {
           col.active = true;
-          col.headY = Math.random() * -15;
-          col.speed = Math.random() * 0.22 + 0.12;
-          col.length = Math.floor(Math.random() * 14 + 6);
-          col.colorType = Math.random() > 0.4 ? 'cyan' : Math.random() > 0.5 ? 'mint' : 'violet';
+          col.headY = Math.random() * -12;
+          col.baseSpeed = Math.random() * 0.18 + 0.12;
+          col.length = Math.floor(Math.random() * 16 + 8);
+          col.colorType = Math.random() > 0.45 ? 'mint' : Math.random() > 0.5 ? 'cyan' : 'emerald';
         }
       }
     }
 
-    // 3. Render interactive cursor-activated pixel matrix
-    const cursorRadius = 150;
+    // 3. Render interactive cursor-activated pixel matrix with magnetic excitation
+    const cursorRadius = 220;
     const startCol = Math.max(0, Math.floor((cursorX - cursorRadius) / gap));
     const endCol = Math.min(cols - 1, Math.ceil((cursorX + cursorRadius) / gap));
     const startRow = Math.max(0, Math.floor((cursorY - cursorRadius) / gap));
@@ -240,7 +281,7 @@ const initPixelMatrixBackground = () => {
 
         if (dist < cursorRadius) {
           const proximity = 1 - dist / cursorRadius;
-          const energy = Math.pow(proximity, 1.8) * 0.6;
+          const energy = Math.pow(proximity, 1.7) * 0.85;
 
           const idx = r * cols + c;
           if (idx >= 0 && idx < cellEnergy.length) {
@@ -250,17 +291,32 @@ const initPixelMatrixBackground = () => {
       }
     }
 
-    // Render & decay cell energy
+    // Render & decay cell energy with elastic tactile deflection
     for (let c = 0; c < cols; c++) {
       for (let r = 0; r < rows; r++) {
         const idx = r * cols + c;
         const e = cellEnergy[idx];
         if (e > 0.02) {
-          const color = e > 0.42 ? 'cyan' : 'mint';
-          ctx.fillStyle = getColor(color, Math.min(e, 0.65));
-          ctx.fillRect(c * gap, r * gap, pixelSize, pixelSize);
+          const px = c * gap;
+          const py = r * gap;
+          const dx = px - cursorX;
+          const dy = py - cursorY;
+          const dist = Math.hypot(dx, dy);
 
-          cellEnergy[idx] = e * 0.94;
+          // Subtle physical deflection away from cursor
+          let offsetX = 0;
+          let offsetY = 0;
+          if (dist > 0 && dist < 85) {
+            const repel = (1 - dist / 85) * 3;
+            offsetX = (dx / dist) * repel;
+            offsetY = (dy / dist) * repel;
+          }
+
+          const color = e > 0.5 ? 'mint' : e > 0.25 ? 'cyan' : 'emerald';
+          ctx.fillStyle = getColor(color, Math.min(e, 0.88));
+          ctx.fillRect(px + offsetX, py + offsetY, pixelSize, pixelSize);
+
+          cellEnergy[idx] = e * 0.93;
         } else if (e > 0) {
           cellEnergy[idx] = 0;
         }
@@ -322,17 +378,96 @@ if (canvas) {
   // Hero exit parallax scrub: 3D depth dissolve as user scrolls down
   const heroSection = canvas.closest('.robot-hero') || canvas;
   gsap.to(canvas, {
-    y: 110,
-    scale: 0.94,
-    opacity: 0.35,
+    y: 130,
+    scale: 0.9,
+    opacity: 0.3,
+    filter: 'blur(5px)',
     ease: 'none',
     scrollTrigger: {
       trigger: heroSection,
       start: 'top top',
       end: 'bottom top',
-      scrub: 0.5,
+      scrub: 0.6,
     },
   });
+
+  const horizon = document.querySelector('.hero-horizon-layer');
+  if (horizon) {
+    gsap.to(horizon, {
+      scale: 1.35,
+      rotate: 35,
+      opacity: 0.1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroSection,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.6,
+      },
+    });
+  }
+
+  const badgeLeft = document.querySelector('.hero-badge-left');
+  if (badgeLeft) {
+    gsap.to(badgeLeft, {
+      x: -70,
+      y: 70,
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroSection,
+        start: 'top top',
+        end: 'bottom 45%',
+        scrub: 0.5,
+      },
+    });
+  }
+
+  const badgeRight = document.querySelector('.hero-badge-right');
+  if (badgeRight) {
+    gsap.to(badgeRight, {
+      x: 70,
+      y: 70,
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroSection,
+        start: 'top top',
+        end: 'bottom 45%',
+        scrub: 0.5,
+      },
+    });
+  }
+
+  const hudTop = document.querySelector('.hero-hud-top');
+  if (hudTop) {
+    gsap.to(hudTop, {
+      y: -35,
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroSection,
+        start: 'top top',
+        end: 'bottom 50%',
+        scrub: 0.5,
+      },
+    });
+  }
+
+  const scrollHint = document.querySelector('.hero-scroll-hint');
+  if (scrollHint) {
+    gsap.to(scrollHint, {
+      opacity: 0,
+      y: 20,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroSection,
+        start: 'top top',
+        end: 'top -15%',
+        scrub: 0.3,
+      },
+    });
+  }
 
   const wordmark = document.querySelector('.scene-word');
   if (wordmark) {

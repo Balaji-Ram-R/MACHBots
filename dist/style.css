@@ -98,14 +98,7 @@ body {
   height: 100vh;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.85;
-}
-
-main,
-.site-header,
-footer {
-  position: relative;
-  z-index: 1;
+  opacity: 1;
 }
 
 main,
@@ -350,27 +343,237 @@ em {
   overflow: hidden;
   isolation: isolate;
   background:
-    radial-gradient(circle at 50% 48%, rgba(180, 92, 255, 0.2) 0%, rgba(36, 22, 68, 0.45) 45%, transparent 75%),
-    radial-gradient(circle at 80% 30%, rgba(255, 79, 216, 0.16) 0%, transparent 55%),
-    linear-gradient(145deg, #1f123e 0%, #150d2c 60%, #100824 100%);
+    radial-gradient(circle at 50% 48%, rgba(180, 92, 255, 0.16) 0%, rgba(20, 10, 42, 0.28) 45%, transparent 75%),
+    radial-gradient(circle at 80% 25%, rgba(75, 227, 255, 0.12) 0%, transparent 60%),
+    transparent;
 }
 
-/* Sonic Horizon background laser arc */
+/* Sonic Horizon background laser arc & radar crosshair */
 .hero-horizon-layer {
   position: absolute;
-  width: min(76vw, 880px);
-  height: min(76vw, 880px);
-  border: 1px solid rgba(75, 227, 255, 0.22);
+  width: min(78vw, 920px);
+  height: min(78vw, 920px);
+  border: 1px dashed rgba(75, 227, 255, 0.22);
   border-radius: 50%;
   left: 50%;
   top: 48%;
   transform: translate(-50%, -50%);
   box-shadow:
-    0 0 0 28px rgba(180, 92, 255, 0.035),
+    0 0 0 32px rgba(180, 92, 255, 0.035),
     0 0 90px rgba(255, 79, 216, 0.14),
     inset 0 0 60px rgba(75, 227, 255, 0.06);
   pointer-events: none;
   z-index: 1;
+  animation: rotate-horizon 120s infinite linear;
+}
+
+.horizon-ring-inner {
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgba(180, 92, 255, 0.16);
+  border-radius: 50%;
+  box-shadow: inset 0 0 40px rgba(75, 227, 255, 0.04);
+}
+
+.horizon-crosshair {
+  position: absolute;
+  inset: 0;
+}
+
+.horizon-crosshair::before,
+.horizon-crosshair::after {
+  content: "";
+  position: absolute;
+  background: rgba(75, 227, 255, 0.12);
+}
+
+.horizon-crosshair::before {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+}
+
+.horizon-crosshair::after {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+}
+
+@keyframes rotate-horizon {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Corner Reticle Brackets */
+.hero-reticle {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0.55;
+}
+
+.reticle-tl {
+  top: 24px;
+  left: 24px;
+  border-top: 2px solid var(--laser-cyan);
+  border-left: 2px solid var(--laser-cyan);
+}
+
+.reticle-tr {
+  top: 24px;
+  right: 24px;
+  border-top: 2px solid var(--laser-cyan);
+  border-right: 2px solid var(--laser-cyan);
+}
+
+/* Top-right System HUD Status Pill */
+.hero-hud-pill {
+  position: absolute;
+  top: 32px;
+  right: 5%;
+  z-index: 5;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--laser-cyan);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(22, 13, 44, 0.65);
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(75, 227, 255, 0.28);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(75, 227, 255, 0.1);
+  pointer-events: none;
+}
+
+.hud-status-live {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2ee59d;
+  box-shadow: 0 0 8px #2ee59d;
+  animation: pulse-mint 2s infinite ease-in-out;
+}
+
+@keyframes pulse-mint {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.hud-mono {
+  font-family: monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.hud-sep {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.hud-val {
+  color: var(--orchid-white);
+  font-weight: 700;
+}
+
+/* Floating Telemetry Spec Badges on Hero Flanks */
+.hero-telemetry-badge {
+  position: absolute;
+  z-index: 5;
+  background: rgba(26, 16, 51, 0.65);
+  border: 1px solid rgba(75, 227, 255, 0.25);
+  border-radius: 14px;
+  padding: 16px 20px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(75, 227, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  pointer-events: none;
+  max-width: 240px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-badge-left {
+  left: 5%;
+  top: 42%;
+  border-left: 3px solid var(--laser-cyan);
+}
+
+.hero-badge-right {
+  right: 5%;
+  top: 38%;
+  border-right: 3px solid var(--plasma-orchid);
+  text-align: right;
+}
+
+.telemetry-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--laser-cyan);
+  text-transform: uppercase;
+}
+
+.hero-badge-right .telemetry-tag {
+  color: var(--plasma-orchid);
+}
+
+.telemetry-value {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--orchid-white);
+  letter-spacing: -0.02em;
+}
+
+.telemetry-desc {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
+/* Hero Scroll Hint */
+.hero-scroll-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.mouse-icon {
+  width: 14px;
+  height: 22px;
+  border: 1.5px solid rgba(75, 227, 255, 0.45);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  padding-top: 3px;
+}
+
+.mouse-wheel {
+  width: 2px;
+  height: 5px;
+  background: var(--laser-cyan);
+  border-radius: 2px;
+  animation: scroll-wheel 1.8s infinite ease-in-out;
+}
+
+@keyframes scroll-wheel {
+  0% { transform: translateY(0); opacity: 1; }
+  60% { transform: translateY(5px); opacity: 0; }
+  61% { transform: translateY(0); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
 }
 
 /* Watermark typography */
@@ -2075,6 +2278,12 @@ html.lenis, html.lenis body {
   .robot-hero {
     min-height: 580px;
     height: calc(100svh - 58px);
+  }
+
+  .hero-telemetry-badge,
+  .hero-hud-pill,
+  .hero-scroll-hint {
+    display: none !important;
   }
 
   .scene-word {
