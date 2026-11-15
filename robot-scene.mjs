@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 let lenis = null;
 try {
   lenis = new Lenis({
-    duration: 1.25,
+    duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
     syncTouch: false,
@@ -20,10 +20,21 @@ try {
   gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
   });
-  gsap.ticker.lagSmoothing(0);
+  // Enable lag smoothing (cap delta at 33ms if paused for >500ms) to eliminate tab-switch freeze & stutter
+  gsap.ticker.lagSmoothing(500, 33);
 } catch (err) {
   console.warn('Lenis could not initialize', err);
 }
+
+// Seamlessly manage scroll engine across tab visibility states
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    lenis?.stop();
+  } else {
+    lenis?.start();
+    ScrollTrigger.refresh();
+  }
+});
 
 // Smooth anchor scrolling integrated with Lenis
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -43,7 +54,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 });
 
 // ==========================================================================
-// 2. Cybernetic Pixel Matrix Background (Digital Rain & Slow Cursor Interaction)
+// 2. High-Performance Cybernetic Pixel Matrix (Zero-Allocation & Wake Recovery)
 // ==========================================================================
 const initPixelMatrixBackground = () => {
   const bgCanvas = document.querySelector('#pixel-matrix-canvas');
@@ -81,8 +92,19 @@ const initPixelMatrixBackground = () => {
   let lastScrollY = window.scrollY || 0;
   let scrollSpeed = 0;
 
-  // Energy cell grid for decaying cursor trails
+  // High-performance energy cell grid & active sparse index tracking
   let cellEnergy = [];
+  let activeEnergyIndices = [];
+
+  // Static color map: eliminates tens of thousands of string allocations per second (no GC pauses)
+  const COLORS = {
+    cyan: '#4be3ff',
+    mint: '#76ffd7',
+    emerald: '#2ee59d',
+    teal: '#20b2aa',
+    violet: '#b45cff',
+    white: '#ffffff',
+  };
 
   const resize = () => {
     width = window.innerWidth;
@@ -101,14 +123,13 @@ const initPixelMatrixBackground = () => {
         active: Math.random() < 0.35,
         headY: Math.random() * -rows,
         baseSpeed: Math.random() * 0.18 + 0.12,
-        speed: 0.2,
         length: Math.floor(Math.random() * 16 + 8),
         cooldown: Math.floor(Math.random() * 90 + 20),
         colorType: Math.random() > 0.45 ? 'mint' : Math.random() > 0.5 ? 'cyan' : 'emerald',
       });
     }
 
-    // Initialize ambient background pixels & clusters (matching the reference image)
+    // Initialize ambient background pixels & clusters
     ambientPixels = [];
     const totalCells = cols * rows;
     const ambientCount = Math.floor(totalCells * 0.18);
@@ -145,6 +166,7 @@ const initPixelMatrixBackground = () => {
     }
 
     cellEnergy = new Float32Array(cols * rows);
+    activeEnergyIndices = [];
   };
 
   resize();
@@ -176,26 +198,12 @@ const initPixelMatrixBackground = () => {
     { passive: true }
   );
 
-  const getColor = (type, alpha) => {
-    switch (type) {
-      case 'mint':
-        return `rgba(118, 255, 215, ${alpha})`;
-      case 'emerald':
-        return `rgba(46, 229, 157, ${alpha})`;
-      case 'teal':
-        return `rgba(32, 178, 170, ${alpha})`;
-      case 'violet':
-        return `rgba(180, 92, 255, ${alpha})`;
-      case 'white':
-        return `rgba(255, 255, 255, ${alpha})`;
-      case 'cyan':
-      default:
-        return `rgba(75, 227, 255, ${alpha})`;
-    }
-  };
-
   const render = (time) => {
-    if (!isVisible) return;
+    if (!isVisible) {
+      animationId = null;
+      return;
+    }
+    animationId = requestAnimationFrame(render);
     globalTime = time * 0.001;
 
     // Decay scroll warp velocity back to 0
@@ -218,7 +226,8 @@ const initPixelMatrixBackground = () => {
       const p = ambientPixels[i];
       const pulse = Math.sin(globalTime * p.pulseSpeed + p.phase) * 0.07 + p.baseAlpha;
       if (pulse > 0.02) {
-        ctx.fillStyle = getColor(p.colorType, Math.min(pulse, 0.45));
+        ctx.fillStyle = COLORS[p.colorType] || COLORS.cyan;
+        ctx.globalAlpha = Math.min(pulse, 0.45);
         ctx.fillRect(p.col * gap, p.row * gap, pixelSize, pixelSize);
       }
     }
@@ -240,9 +249,10 @@ const initPixelMatrixBackground = () => {
             const isHead = distFromHead < 1.1;
 
             const alpha = isHead ? 0.92 : progress * 0.55;
-            const colorType = isHead ? 'white' : col.colorType;
+            const color = isHead ? COLORS.white : COLORS[col.colorType] || COLORS.cyan;
 
-            ctx.fillStyle = getColor(colorType, alpha);
+            ctx.fillStyle = color;
+            ctx.globalAlpha = alpha;
             ctx.fillRect(c * gap, r * gap, pixelSize, pixelSize);
           }
         }
@@ -264,7 +274,7 @@ const initPixelMatrixBackground = () => {
       }
     }
 
-    // 3. Render interactive cursor-activated pixel matrix with magnetic excitation
+    // 3. Render interactive cursor-activated pixel matrix with sparse index optimization
     const cursorRadius = 220;
     const startCol = Math.max(0, Math.floor((cursorX - cursorRadius) / gap));
     const endCol = Math.min(cols - 1, Math.ceil((cursorX + cursorRadius) / gap));
@@ -285,60 +295,92 @@ const initPixelMatrixBackground = () => {
 
           const idx = r * cols + c;
           if (idx >= 0 && idx < cellEnergy.length) {
+            if (cellEnergy[idx] <= 0.02 && energy > 0.02) {
+              activeEnergyIndices.push(idx);
+            }
             cellEnergy[idx] = Math.max(cellEnergy[idx], energy);
           }
         }
       }
     }
 
-    // Render & decay cell energy with elastic tactile deflection
-    for (let c = 0; c < cols; c++) {
-      for (let r = 0; r < rows; r++) {
-        const idx = r * cols + c;
-        const e = cellEnergy[idx];
-        if (e > 0.02) {
-          const px = c * gap;
-          const py = r * gap;
-          const dx = px - cursorX;
-          const dy = py - cursorY;
-          const dist = Math.hypot(dx, dy);
+    // Render & decay cell energy using sparse active list (near 0% idle CPU overhead)
+    const nextActive = [];
+    for (let i = 0; i < activeEnergyIndices.length; i++) {
+      const idx = activeEnergyIndices[i];
+      const e = cellEnergy[idx];
+      if (e > 0.02) {
+        const c = idx % cols;
+        const r = Math.floor(idx / cols);
+        const px = c * gap;
+        const py = r * gap;
+        const dx = px - cursorX;
+        const dy = py - cursorY;
+        const dist = Math.hypot(dx, dy);
 
-          // Subtle physical deflection away from cursor
-          let offsetX = 0;
-          let offsetY = 0;
-          if (dist > 0 && dist < 85) {
-            const repel = (1 - dist / 85) * 3;
-            offsetX = (dx / dist) * repel;
-            offsetY = (dy / dist) * repel;
-          }
-
-          const color = e > 0.5 ? 'mint' : e > 0.25 ? 'cyan' : 'emerald';
-          ctx.fillStyle = getColor(color, Math.min(e, 0.88));
-          ctx.fillRect(px + offsetX, py + offsetY, pixelSize, pixelSize);
-
-          cellEnergy[idx] = e * 0.93;
-        } else if (e > 0) {
-          cellEnergy[idx] = 0;
+        // Tactile elastic deflection
+        let offsetX = 0;
+        let offsetY = 0;
+        if (dist > 0 && dist < 85) {
+          const repel = (1 - dist / 85) * 3;
+          offsetX = (dx / dist) * repel;
+          offsetY = (dy / dist) * repel;
         }
+
+        const color = e > 0.5 ? COLORS.mint : e > 0.25 ? COLORS.cyan : COLORS.emerald;
+        ctx.fillStyle = color;
+        ctx.globalAlpha = Math.min(e, 0.88);
+        ctx.fillRect(px + offsetX, py + offsetY, pixelSize, pixelSize);
+
+        cellEnergy[idx] = e * 0.93;
+        nextActive.push(idx);
+      } else {
+        cellEnergy[idx] = 0;
       }
     }
+    activeEnergyIndices = nextActive;
 
+    // Reset globalAlpha
+    ctx.globalAlpha = 1;
+  };
+
+  const startLoop = () => {
+    if (animationId) cancelAnimationFrame(animationId);
+    isVisible = true;
+    lastScrollY = window.scrollY || 0;
+    scrollSpeed = 0;
     animationId = requestAnimationFrame(render);
   };
 
-  animationId = requestAnimationFrame(render);
+  const stopLoop = () => {
+    isVisible = false;
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+  };
 
+  startLoop();
+
+  // Instant recovery and freeze prevention on tab switch & window focus
   document.addEventListener('visibilitychange', () => {
-    isVisible = !document.hidden;
-    if (isVisible && !animationId) {
-      animationId = requestAnimationFrame(render);
+    if (document.hidden) {
+      stopLoop();
+    } else {
+      startLoop();
+    }
+  });
+
+  window.addEventListener('focus', () => {
+    if (!document.hidden && !animationId) {
+      startLoop();
     }
   });
 };
 initPixelMatrixBackground();
 
 // ==========================================================================
-// 3. Interactive 3D Robot Spline Hero (Continuous Live Motion)
+// 3. Interactive 3D Robot Spline Hero (Continuous Live Motion & Recovery)
 // ==========================================================================
 const canvas = document.querySelector('#robot-canvas');
 if (canvas) {
@@ -346,7 +388,9 @@ if (canvas) {
 
   const initSplineRobot = async () => {
     try {
-      spline = new Application(canvas);
+      spline = new Application(canvas, {
+        renderMode: 'continuous',
+      });
 
       // Load new 3D robot animation scene
       try {
@@ -360,11 +404,25 @@ if (canvas) {
         spline.play();
       } catch (e) {}
 
-      // Maintain continuous motion when tab visibility toggles
+      // Maintain continuous motion & prevent freeze on tab switch
       document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          try {
+            spline?.stop();
+          } catch (e) {}
+        } else {
+          try {
+            spline?.play();
+            spline?.requestRender();
+          } catch (e) {}
+        }
+      });
+
+      window.addEventListener('focus', () => {
         if (!document.hidden && spline) {
           try {
             spline.play();
+            spline.requestRender();
           } catch (e) {}
         }
       });
