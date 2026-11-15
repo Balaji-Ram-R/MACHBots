@@ -43,83 +43,277 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 });
 
 // ==========================================================================
-// 2. Interactive 3D Robot Spline Hero (Guaranteed Autoplay on Load)
+// 2. Cybernetic Pixel Matrix Background (Digital Rain & Slow Cursor Interaction)
+// ==========================================================================
+const initPixelMatrixBackground = () => {
+  const bgCanvas = document.querySelector('#pixel-matrix-canvas');
+  if (!bgCanvas) return;
+  const ctx = bgCanvas.getContext('2d', { alpha: true });
+  if (!ctx) return;
+
+  let width = 0;
+  let height = 0;
+  let dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  let animationId = null;
+  let isVisible = true;
+
+  // Grid sizing: crisp pixel squares matching the reference image
+  const gap = 16;
+  const pixelSize = 3.5;
+  let cols = 0;
+  let rows = 0;
+
+  // Columns for matrix digital rain
+  let columns = [];
+
+  // Dormant ambient pixels with gentle twinkling
+  let ambientPixels = [];
+
+  // Interactive cursor state with buttery smooth inertia
+  let targetX = -500;
+  let targetY = -500;
+  let cursorX = -500;
+  let cursorY = -500;
+  let hasInteracted = false;
+  let globalTime = 0;
+
+  // Energy cell grid for decaying cursor trails
+  let cellEnergy = [];
+
+  const resize = () => {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    bgCanvas.width = width * dpr;
+    bgCanvas.height = height * dpr;
+    ctx.scale(dpr, dpr);
+
+    cols = Math.ceil(width / gap);
+    rows = Math.ceil(height / gap);
+
+    // Initialize columns
+    columns = [];
+    for (let c = 0; c < cols; c++) {
+      columns.push({
+        active: Math.random() < 0.28,
+        headY: Math.random() * -rows,
+        speed: Math.random() * 0.22 + 0.12,
+        length: Math.floor(Math.random() * 14 + 6),
+        cooldown: Math.floor(Math.random() * 120 + 30),
+        colorType: Math.random() > 0.4 ? 'cyan' : Math.random() > 0.5 ? 'mint' : 'violet',
+      });
+    }
+
+    // Initialize ambient background pixels
+    ambientPixels = [];
+    const totalCells = cols * rows;
+    const ambientCount = Math.floor(totalCells * 0.12);
+    for (let i = 0; i < ambientCount; i++) {
+      ambientPixels.push({
+        col: Math.floor(Math.random() * cols),
+        row: Math.floor(Math.random() * rows),
+        baseAlpha: Math.random() * 0.12 + 0.04,
+        pulseSpeed: Math.random() * 1.5 + 0.8,
+        phase: Math.random() * Math.PI * 2,
+        colorType: Math.random() > 0.35 ? 'cyan' : 'mint',
+      });
+    }
+
+    cellEnergy = new Float32Array(cols * rows);
+  };
+
+  resize();
+  window.addEventListener('resize', () => {
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    resize();
+  });
+
+  // Track cursor position
+  window.addEventListener(
+    'pointermove',
+    (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      hasInteracted = true;
+    },
+    { passive: true }
+  );
+
+  window.addEventListener('pointerleave', () => {
+    hasInteracted = false;
+  });
+
+  const getColor = (type, alpha) => {
+    switch (type) {
+      case 'mint':
+        return `rgba(46, 229, 157, ${alpha})`;
+      case 'violet':
+        return `rgba(180, 92, 255, ${alpha})`;
+      case 'white':
+        return `rgba(255, 241, 251, ${alpha})`;
+      case 'cyan':
+      default:
+        return `rgba(75, 227, 255, ${alpha})`;
+    }
+  };
+
+  const render = (time) => {
+    if (!isVisible) return;
+    globalTime = time * 0.001;
+
+    // Organic harmonic drift when idle
+    if (!hasInteracted) {
+      targetX = width * 0.5 + Math.sin(globalTime * 0.45) * (width * 0.28);
+      targetY = height * 0.45 + Math.cos(globalTime * 0.6) * (height * 0.22);
+    }
+
+    // Slow, luxurious cursor damping (0.04 lerp)
+    cursorX += (targetX - cursorX) * 0.04;
+    cursorY += (targetY - cursorY) * 0.04;
+
+    ctx.clearRect(0, 0, width, height);
+
+    // 1. Render ambient subtle dormant pixels
+    for (let i = 0; i < ambientPixels.length; i++) {
+      const p = ambientPixels[i];
+      const pulse = Math.sin(globalTime * p.pulseSpeed + p.phase) * 0.05 + p.baseAlpha;
+      if (pulse > 0.02) {
+        ctx.fillStyle = getColor(p.colorType, Math.min(pulse, 0.22));
+        ctx.fillRect(p.col * gap, p.row * gap, pixelSize, pixelSize);
+      }
+    }
+
+    // 2. Render & update matrix digital rain columns
+    for (let c = 0; c < cols; c++) {
+      const col = columns[c];
+
+      if (col.active) {
+        col.headY += col.speed;
+
+        const startRow = Math.max(0, Math.floor(col.headY - col.length));
+        const endRow = Math.min(rows, Math.floor(col.headY));
+
+        for (let r = startRow; r <= endRow; r++) {
+          const distFromHead = col.headY - r;
+          if (distFromHead >= 0 && distFromHead <= col.length) {
+            const progress = 1 - distFromHead / col.length;
+            const isHead = distFromHead < 1.2;
+
+            const alpha = isHead ? 0.62 : progress * 0.42;
+            const colorType = isHead ? 'white' : col.colorType;
+
+            ctx.fillStyle = getColor(colorType, alpha);
+            ctx.fillRect(c * gap, r * gap, pixelSize, pixelSize);
+          }
+        }
+
+        if (col.headY - col.length > rows) {
+          col.active = false;
+          col.headY = Math.random() * -10 - 2;
+          col.cooldown = Math.floor(Math.random() * 80 + 20);
+        }
+      } else {
+        col.cooldown--;
+        if (col.cooldown <= 0) {
+          col.active = true;
+          col.headY = Math.random() * -15;
+          col.speed = Math.random() * 0.22 + 0.12;
+          col.length = Math.floor(Math.random() * 14 + 6);
+          col.colorType = Math.random() > 0.4 ? 'cyan' : Math.random() > 0.5 ? 'mint' : 'violet';
+        }
+      }
+    }
+
+    // 3. Render interactive cursor-activated pixel matrix
+    const cursorRadius = 150;
+    const startCol = Math.max(0, Math.floor((cursorX - cursorRadius) / gap));
+    const endCol = Math.min(cols - 1, Math.ceil((cursorX + cursorRadius) / gap));
+    const startRow = Math.max(0, Math.floor((cursorY - cursorRadius) / gap));
+    const endRow = Math.min(rows - 1, Math.ceil((cursorY + cursorRadius) / gap));
+
+    for (let c = startCol; c <= endCol; c++) {
+      for (let r = startRow; r <= endRow; r++) {
+        const px = c * gap;
+        const py = r * gap;
+        const dx = cursorX - px;
+        const dy = cursorY - py;
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < cursorRadius) {
+          const proximity = 1 - dist / cursorRadius;
+          const energy = Math.pow(proximity, 1.8) * 0.6;
+
+          const idx = r * cols + c;
+          if (idx >= 0 && idx < cellEnergy.length) {
+            cellEnergy[idx] = Math.max(cellEnergy[idx], energy);
+          }
+        }
+      }
+    }
+
+    // Render & decay cell energy
+    for (let c = 0; c < cols; c++) {
+      for (let r = 0; r < rows; r++) {
+        const idx = r * cols + c;
+        const e = cellEnergy[idx];
+        if (e > 0.02) {
+          const color = e > 0.42 ? 'cyan' : 'mint';
+          ctx.fillStyle = getColor(color, Math.min(e, 0.65));
+          ctx.fillRect(c * gap, r * gap, pixelSize, pixelSize);
+
+          cellEnergy[idx] = e * 0.94;
+        } else if (e > 0) {
+          cellEnergy[idx] = 0;
+        }
+      }
+    }
+
+    animationId = requestAnimationFrame(render);
+  };
+
+  animationId = requestAnimationFrame(render);
+
+  document.addEventListener('visibilitychange', () => {
+    isVisible = !document.hidden;
+    if (isVisible && !animationId) {
+      animationId = requestAnimationFrame(render);
+    }
+  });
+};
+initPixelMatrixBackground();
+
+// ==========================================================================
+// 3. Interactive 3D Robot Spline Hero (Continuous Live Motion)
 // ==========================================================================
 const canvas = document.querySelector('#robot-canvas');
 if (canvas) {
-  const status = document.querySelector('#scene-status');
-  const button = document.querySelector('#motion-toggle');
   let spline = null;
-  // Always start with motion ACTIVE (autoplay every time user visits)
-  let paused = false;
-
-  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  const promptText = isTouch ? 'Interactive 3D · Drag to explore' : 'Interactive 3D · Move cursor';
-
-  const updateControlsUI = () => {
-    if (button) {
-      button.textContent = paused ? 'Resume motion' : 'Pause motion';
-      button.setAttribute('aria-pressed', String(paused));
-    }
-    if (status) {
-      status.textContent = paused ? 'Motion paused' : promptText;
-    }
-    if (spline) {
-      try {
-        if (paused) {
-          spline.stop();
-        } else {
-          spline.play();
-        }
-      } catch (err) {
-        // safe guard
-      }
-    }
-  };
 
   const initSplineRobot = async () => {
     try {
       spline = new Application(canvas);
 
-      // Load local robot.splinecode with fallback to remote Spline scene URL
+      // Load new 3D robot animation scene
       try {
-        await spline.load('/assets/robot.splinecode');
-      } catch (localErr) {
         await spline.load('https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode');
+      } catch (remoteErr) {
+        await spline.load('/assets/robot.splinecode');
       }
 
-      // Explicitly ensure animation is running and active
-      paused = false;
+      // Ensure live continuous motion is active at all times
       try {
         spline.play();
       } catch (e) {}
 
-      updateControlsUI();
-
-      if (status) {
-        status.textContent = promptText;
-        status.classList.add('ready');
-      }
-
-      if (button) {
-        button.addEventListener('click', () => {
-          paused = !paused;
-          updateControlsUI();
-        });
-      }
-
-      // When browser tab visibility toggles, keep animation running smoothly
+      // Maintain continuous motion when tab visibility toggles
       document.addEventListener('visibilitychange', () => {
-        if (!document.hidden && !paused && spline) {
+        if (!document.hidden && spline) {
           try {
             spline.play();
           } catch (e) {}
         }
       });
     } catch (error) {
-      console.warn('Spline robot could not load, fallback active', error);
-      if (status) status.textContent = '3D preview offline. Explore models below.';
-      if (button) button.hidden = true;
+      console.warn('Spline robot could not load', error);
     }
   };
 
@@ -158,7 +352,7 @@ if (canvas) {
 }
 
 // ==========================================================================
-// 3. Multi-Layer Parallax Background Elements
+// 4. Multi-Layer Parallax Background Elements
 // ==========================================================================
 const initParallaxLayers = () => {
   const triggerElements = document.querySelectorAll('[data-parallax-layers]');
@@ -196,11 +390,11 @@ const initParallaxLayers = () => {
 initParallaxLayers();
 
 // ==========================================================================
-// 4. Creative MacBook Opening 3D Animations on Robot Cards
+// 5. Creative MacBook Opening 3D Animations on Robot Cards
 // ==========================================================================
 const initMacbookOpeningCards = () => {
   const macbookCards = document.querySelectorAll('[data-macbook-card], .robot-card');
-  macbookCards.forEach((card, i) => {
+  macbookCards.forEach((card) => {
     const sheen = card.querySelector('.card-sheen');
     const img = card.querySelector('.product-image img');
 
@@ -306,7 +500,7 @@ const initMacbookOpeningCards = () => {
 initMacbookOpeningCards();
 
 // ==========================================================================
-// 5. Professional Float-In & Kinetic Scroll Animations
+// 6. Professional Float-In & Kinetic Scroll Animations
 // ==========================================================================
 const initFloatInAnimations = () => {
   // A. Section Headings: Smooth blur-to-crisp floating reveal
