@@ -98,19 +98,17 @@ const initPixelMatrixBackground = () => {
 
   // Static color map: eliminates tens of thousands of string allocations per second (no GC pauses)
   const COLORS = {
-    cyan: '#00f0ff',
-    sky: '#38bdf8',
-    mint: '#76ffd7',
-    emerald: '#2ee59d',
-    teal: '#20b2aa',
-    violet: '#b45cff',
-    orchid: '#ff4fd8',
-    amber: '#fbbf24',
-    white: '#ffffff',
+    powder: '#8DB9F0',
+    lavender: '#E9E8F8',
+    ice: '#B8D4F7',
+    sky: '#9EC4F5',
+    periwinkle: '#A4BCE8',
+    pearl: '#F4F3FC',
+    white: '#FFFFFF',
   };
 
-  const colColorTypes = ['mint', 'cyan', 'sky', 'emerald', 'violet', 'orchid'];
-  const ambientColorTypes = ['mint', 'cyan', 'sky', 'emerald', 'violet', 'orchid', 'amber'];
+  const colColorTypes = ['powder', 'lavender', 'ice', 'sky', 'periwinkle'];
+  const ambientColorTypes = ['powder', 'lavender', 'ice', 'sky', 'periwinkle', 'pearl', 'white'];
 
   const resize = () => {
     width = window.innerWidth;
@@ -334,7 +332,7 @@ const initPixelMatrixBackground = () => {
           offsetY = (dy / dist) * repel;
         }
 
-        const color = e > 0.65 ? COLORS.white : e > 0.4 ? COLORS.cyan : e > 0.2 ? COLORS.violet : COLORS.emerald;
+        const color = e > 0.65 ? COLORS.white : e > 0.4 ? COLORS.lavender : e > 0.2 ? COLORS.powder : COLORS.ice;
         ctx.fillStyle = color;
         ctx.globalAlpha = Math.min(e, 0.88);
         ctx.fillRect(px + offsetX, py + offsetY, pixelSize, pixelSize);
