@@ -98,13 +98,19 @@ const initPixelMatrixBackground = () => {
 
   // Static color map: eliminates tens of thousands of string allocations per second (no GC pauses)
   const COLORS = {
-    cyan: '#4be3ff',
+    cyan: '#00f0ff',
+    sky: '#38bdf8',
     mint: '#76ffd7',
     emerald: '#2ee59d',
     teal: '#20b2aa',
     violet: '#b45cff',
+    orchid: '#ff4fd8',
+    amber: '#fbbf24',
     white: '#ffffff',
   };
+
+  const colColorTypes = ['mint', 'cyan', 'sky', 'emerald', 'violet', 'orchid'];
+  const ambientColorTypes = ['mint', 'cyan', 'sky', 'emerald', 'violet', 'orchid', 'amber'];
 
   const resize = () => {
     width = window.innerWidth;
@@ -125,7 +131,7 @@ const initPixelMatrixBackground = () => {
         baseSpeed: Math.random() * 0.18 + 0.12,
         length: Math.floor(Math.random() * 16 + 8),
         cooldown: Math.floor(Math.random() * 90 + 20),
-        colorType: Math.random() > 0.45 ? 'mint' : Math.random() > 0.5 ? 'cyan' : 'emerald',
+        colorType: colColorTypes[Math.floor(Math.random() * colColorTypes.length)],
       });
     }
 
@@ -140,7 +146,7 @@ const initPixelMatrixBackground = () => {
         baseAlpha: Math.random() * 0.16 + 0.08,
         pulseSpeed: Math.random() * 1.6 + 0.7,
         phase: Math.random() * Math.PI * 2,
-        colorType: Math.random() > 0.4 ? 'mint' : Math.random() > 0.4 ? 'cyan' : 'emerald',
+        colorType: ambientColorTypes[Math.floor(Math.random() * ambientColorTypes.length)],
       });
     }
 
@@ -151,6 +157,7 @@ const initPixelMatrixBackground = () => {
       const centerRow = Math.floor(Math.random() * rows);
       const clusterLen = Math.floor(Math.random() * 5 + 3);
       const isHorizontal = Math.random() > 0.4;
+      const clusterColor = ambientColorTypes[Math.floor(Math.random() * ambientColorTypes.length)];
       for (let s = 0; s < clusterLen; s++) {
         const c = isHorizontal ? Math.min(cols - 1, centerCol + s) : centerCol;
         const r = !isHorizontal ? Math.min(rows - 1, centerRow + s) : centerRow;
@@ -160,7 +167,7 @@ const initPixelMatrixBackground = () => {
           baseAlpha: Math.random() * 0.2 + 0.14,
           pulseSpeed: Math.random() * 1.2 + 0.8,
           phase: Math.random() * Math.PI * 2,
-          colorType: Math.random() > 0.3 ? 'mint' : 'cyan',
+          colorType: clusterColor,
         });
       }
     }
@@ -269,7 +276,7 @@ const initPixelMatrixBackground = () => {
           col.headY = Math.random() * -12;
           col.baseSpeed = Math.random() * 0.18 + 0.12;
           col.length = Math.floor(Math.random() * 16 + 8);
-          col.colorType = Math.random() > 0.45 ? 'mint' : Math.random() > 0.5 ? 'cyan' : 'emerald';
+          col.colorType = colColorTypes[Math.floor(Math.random() * colColorTypes.length)];
         }
       }
     }
@@ -327,7 +334,7 @@ const initPixelMatrixBackground = () => {
           offsetY = (dy / dist) * repel;
         }
 
-        const color = e > 0.5 ? COLORS.mint : e > 0.25 ? COLORS.cyan : COLORS.emerald;
+        const color = e > 0.65 ? COLORS.white : e > 0.4 ? COLORS.cyan : e > 0.2 ? COLORS.violet : COLORS.emerald;
         ctx.fillStyle = color;
         ctx.globalAlpha = Math.min(e, 0.88);
         ctx.fillRect(px + offsetX, py + offsetY, pixelSize, pixelSize);

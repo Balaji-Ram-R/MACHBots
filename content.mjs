@@ -1,5 +1,5 @@
 export const business = {
-  name: 'MACH Bots',
+  name: 'MACH Robotics',
   location: 'Bengaluru, India',
   email: '',
   phone: '',

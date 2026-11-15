@@ -41,4 +41,4 @@ http.createServer(async(req,res)=>{
       res.end('Not Found');
     }
   }
-}).listen(4173,'0.0.0.0',()=>console.log('MACH Bots server running at http://localhost:4173 and http://127.0.0.1:4173'));
+}).listen(4173,'0.0.0.0',()=>console.log('MACH Robotics server running at http://localhost:4173 and http://127.0.0.1:4173'));

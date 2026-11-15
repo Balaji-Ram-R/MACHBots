@@ -1,39 +1,68 @@
 /* ==========================================================================
-   MACH Bots — Plasma Orchid Design System
-   Palette: #1A1033 (Night Base) | #FF4FD8 (Plasma Orchid) | #B45CFF (Electric Violet)
-            #4BE3FF (Laser Cyan) | #FFF1FB (Orchid White)
-   Inspired by Sonic Horizon: Precision cybernetics, laser lines, and luminous gradients.
+   MACH Robotics — Chromatic Luminous Dark-Light System
+   Harmonic Palette:
+     Obsidian & Deep Indigo (#0a0616, #120a24, #1a1033)
+     Cosmic Violet & Ultraviolet (#8b5cf6, #a855f7, #c084fc)
+     Laser Cyan & Glacier Sky (#00f0ff, #38bdf8, #0ea5e9)
+     Cyber Mint & Emerald (#2ee59d, #10b981, #76ffd7)
+     Solar Amber & Coral Rose (#fb923c, #f43f5e, #fb7185, #ff4fd8)
+     Pristine Luminous Highlights (#ffffff, #f8fafc, #f1ecff)
    ========================================================================== */
 
 :root {
-  /* Core Plasma Orchid Palette */
-  --night-base: #1a1033;
-  --night-elevated: #241644;
-  --night-card: rgba(38, 24, 72, 0.72);
-  --night-card-hover: rgba(50, 31, 95, 0.85);
-  --night-input: rgba(26, 16, 51, 0.65);
+  /* Depth & Atmospheric Bases */
+  --space-dark: #0a0616;
+  --night-base: #120a24;
+  --night-elevated: #1a1033;
+  --night-card: rgba(30, 18, 54, 0.72);
+  --night-card-hover: rgba(44, 26, 78, 0.86);
+  --night-input: rgba(18, 11, 35, 0.75);
 
+  /* Vivid Chromatic Laser Accents */
   --plasma-orchid: #ff4fd8;
-  --plasma-violet: #b45cff;
-  --laser-cyan: #4be3ff;
-  --orchid-white: #fff1fb;
+  --plasma-violet: #a855f7;
+  --laser-cyan: #00f0ff;
+  --glacier-sky: #38bdf8;
+  --cyber-mint: #2ee59d;
+  --solar-amber: #fb923c;
+  --coral-rose: #f43f5e;
+  --orchid-white: #ffffff;
 
   /* Typography / Content Contrast */
-  --text-primary: #fff1fb;
-  --text-secondary: #e5dbf7;
-  --text-muted: #b4a2cd;
-  --text-dim: #8c7aa8;
+  --text-primary: #ffffff;
+  --text-secondary: #e2d9f3;
+  --text-muted: #b3a2ce;
+  --text-dim: #8b7ca6;
 
   /* Precision Lines & Laser Borders */
-  --line-subtle: rgba(180, 92, 255, 0.18);
-  --line-medium: rgba(180, 92, 255, 0.32);
-  --line-cyan: rgba(75, 227, 255, 0.45);
+  --line-subtle: rgba(168, 85, 247, 0.2);
+  --line-medium: rgba(168, 85, 247, 0.35);
+  --line-cyan: rgba(0, 240, 255, 0.45);
   --line-orchid: rgba(255, 79, 216, 0.45);
+  --line-amber: rgba(251, 146, 60, 0.45);
 
-  /* Optical Glows */
-  --glow-cyan: 0 0 22px rgba(75, 227, 255, 0.32);
-  --glow-orchid: 0 0 24px rgba(255, 79, 216, 0.32);
-  --glow-violet: 0 0 32px rgba(180, 92, 255, 0.25);
+  /* Optical Specular Glows */
+  --glow-cyan: 0 0 24px rgba(0, 240, 255, 0.35);
+  --glow-orchid: 0 0 26px rgba(255, 79, 216, 0.35);
+  --glow-violet: 0 0 32px rgba(168, 85, 247, 0.3);
+  --glow-amber: 0 0 24px rgba(251, 146, 60, 0.35);
+
+  /* Luminous Metallic & Holographic Typography Gradients */
+  --gradient-text-hero: linear-gradient(135deg, #ffffff 15%, #f1ecff 45%, #99e6ff 75%, #fbcfe8 100%);
+  --gradient-text-accent: linear-gradient(135deg, #00f0ff 0%, #c084fc 50%, #f43f5e 100%);
+  --gradient-text-cyan: linear-gradient(135deg, #e0f2fe 0%, #38bdf8 50%, #06b6d4 100%);
+  --gradient-text-gold: linear-gradient(135deg, #fffbeb 0%, #fde047 50%, #f97316 100%);
+
+  /* Section Atmospheric Gradients (Rich dark-light spectrum, never flat) */
+  --gradient-hero: radial-gradient(ellipse 90% 65% at 50% 35%, rgba(138, 75, 255, 0.28) 0%, rgba(35, 18, 75, 0.55) 45%, #0e081e 100%);
+  --gradient-manifesto: radial-gradient(ellipse at 85% 20%, rgba(244, 63, 94, 0.18), transparent 60%), linear-gradient(145deg, #1d1038 0%, #110924 100%);
+  --gradient-collection: radial-gradient(circle at 15% 35%, rgba(0, 240, 255, 0.14), transparent 60%), radial-gradient(circle at 85% 70%, rgba(168, 85, 247, 0.16), transparent 65%), linear-gradient(180deg, #110924 0%, #0d081b 100%);
+  --gradient-edu: radial-gradient(ellipse at 80% 25%, rgba(46, 229, 157, 0.14), transparent 60%), radial-gradient(ellipse at 20% 75%, rgba(0, 240, 255, 0.13), transparent 60%), linear-gradient(180deg, #0d081b 0%, #091724 50%, #0e0920 100%);
+  --gradient-use: radial-gradient(circle at 80% 25%, rgba(244, 63, 94, 0.15), transparent 55%), radial-gradient(circle at 20% 85%, rgba(168, 85, 247, 0.14), transparent 55%), linear-gradient(135deg, #1e0f37 0%, #100822 100%);
+  --gradient-process: radial-gradient(circle at 25% 65%, rgba(168, 85, 247, 0.16), transparent 55%), radial-gradient(circle at 75% 20%, rgba(251, 146, 60, 0.14), transparent 55%), linear-gradient(180deg, #100822 0%, #160d2e 100%);
+  --gradient-standards: radial-gradient(circle at 50% 10%, rgba(56, 189, 248, 0.15), transparent 55%), linear-gradient(180deg, #160d2e 0%, #0e0a1f 100%);
+  --gradient-action: radial-gradient(circle at 75% 35%, rgba(168, 85, 247, 0.2), transparent 50%), linear-gradient(135deg, #120a24 0%, #090514 100%);
+  --gradient-end-cta: radial-gradient(ellipse at 80% 40%, rgba(244, 63, 94, 0.28), transparent 60%), radial-gradient(ellipse at 20% 60%, rgba(0, 240, 255, 0.24), transparent 60%), linear-gradient(135deg, #241144 0%, #381a6c 45%, #14092a 100%);
 
   /* Legacy mappings for backward compatibility */
   --violet: var(--plasma-violet);
@@ -45,7 +74,7 @@
 
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: var(--text-primary);
-  background: var(--night-base);
+  background: var(--space-dark);
   font-synthesis: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -59,21 +88,22 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 96px;
-  background-color: var(--night-base);
+  background-color: var(--space-dark);
 }
 
 body {
   margin: 0;
-  background-color: var(--night-base);
+  background-color: var(--space-dark);
   color: var(--text-primary);
-  /* Laser grid & ambient atmospheric mesh: illuminated and chromatic, never pitch dark */
+  /* Laser grid & dynamic atmospheric dark-light mesh */
   background-image:
-    radial-gradient(ellipse 65% 45% at 85% 12%, rgba(255, 79, 216, 0.14), transparent 70%),
-    radial-gradient(ellipse 55% 50% at 12% 48%, rgba(75, 227, 255, 0.11), transparent 70%),
-    radial-gradient(ellipse 70% 55% at 50% 88%, rgba(180, 92, 255, 0.15), transparent 75%),
-    linear-gradient(rgba(180, 92, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(75, 227, 255, 0.038) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+    radial-gradient(ellipse 65% 45% at 85% 10%, rgba(255, 79, 216, 0.16), transparent 70%),
+    radial-gradient(ellipse 55% 50% at 12% 38%, rgba(0, 240, 255, 0.13), transparent 70%),
+    radial-gradient(ellipse 70% 55% at 75% 65%, rgba(168, 85, 247, 0.16), transparent 75%),
+    radial-gradient(ellipse 60% 45% at 20% 88%, rgba(46, 229, 157, 0.12), transparent 75%),
+    linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
   min-height: 100vh;
 }
 
@@ -137,10 +167,13 @@ h1, h2, h3 {
   color: var(--orchid-white);
 }
 
-h2 {
+h1, h2 {
   font-size: clamp(38px, 5.2vw, 76px);
   line-height: 1.08;
   letter-spacing: -0.04em;
+  background: var(--gradient-text-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 h3 {
@@ -155,8 +188,10 @@ p {
 
 em {
   font-style: normal;
-  color: var(--laser-cyan);
-  text-shadow: 0 0 20px rgba(75, 227, 255, 0.4);
+  background: var(--gradient-text-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.45));
 }
 
 [hidden] {
@@ -226,14 +261,16 @@ em {
 }
 
 .brand {
-  font-size: 24px;
+  font-size: 23px;
   font-weight: 800;
   letter-spacing: -0.04em;
-  color: #fff;
+  background: linear-gradient(135deg, #ffffff 40%, #e2d9f3 75%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  text-shadow: 0 0 20px rgba(255, 79, 216, 0.25);
+  gap: 5px;
+  text-shadow: 0 0 25px rgba(168, 85, 247, 0.35);
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
@@ -246,8 +283,9 @@ em {
   color: var(--laser-cyan);
   font-weight: 900;
   line-height: 1;
-  text-shadow: 0 0 12px var(--laser-cyan);
+  text-shadow: 0 0 14px var(--laser-cyan);
   animation: pulse-cyan 3s infinite ease-in-out;
+  -webkit-text-fill-color: initial;
 }
 
 .site-header nav {
@@ -342,10 +380,7 @@ em {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  background:
-    radial-gradient(circle at 50% 48%, rgba(180, 92, 255, 0.16) 0%, rgba(20, 10, 42, 0.28) 45%, transparent 75%),
-    radial-gradient(circle at 80% 25%, rgba(75, 227, 255, 0.12) 0%, transparent 60%),
-    transparent;
+  background: var(--gradient-hero);
 }
 
 /* Sonic Horizon background laser arc & radar crosshair */
@@ -804,7 +839,9 @@ em {
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--laser-cyan);
+  background: linear-gradient(90deg, var(--laser-cyan) 0%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin-bottom: 24px;
   display: inline-flex;
   align-items: center;
@@ -825,9 +862,7 @@ em {
    Section 01: Manifesto
    ========================================================================== */
 .manifesto {
-  background:
-    radial-gradient(ellipse at 85% 20%, rgba(180, 92, 255, 0.16), transparent 60%),
-    linear-gradient(135deg, rgba(36, 22, 68, 0.65) 0%, rgba(26, 16, 51, 0.85) 100%);
+  background: var(--gradient-manifesto);
   overflow: hidden;
 }
 
@@ -861,9 +896,7 @@ em {
    Section 02: Collection / Robot Showroom
    ========================================================================== */
 .collection {
-  background:
-    radial-gradient(circle at 15% 40%, rgba(75, 227, 255, 0.08), transparent 60%),
-    linear-gradient(180deg, #1a1033 0%, #150d2c 100%);
+  background: var(--gradient-collection);
 }
 
 .robot-grid {
@@ -877,12 +910,12 @@ em {
 
 .robot-card {
   position: relative;
-  background: var(--night-card);
-  border: 1px solid var(--line-medium);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.08) 0%, rgba(140, 90, 245, 0.1) 40%, rgba(18, 11, 38, 0.82) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 20px;
   padding: 34px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -890,7 +923,7 @@ em {
   transform-style: preserve-3d;
   transform-origin: 50% 100%;
   will-change: transform, opacity;
-  box-shadow: 0 24px 60px rgba(10, 5, 25, 0.65);
+  box-shadow: 0 24px 60px rgba(8, 4, 20, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -902,7 +935,7 @@ em {
     115deg,
     transparent 30%,
     rgba(255, 255, 255, 0.08) 45%,
-    rgba(75, 227, 255, 0.28) 50%,
+    rgba(0, 240, 255, 0.28) 50%,
     rgba(255, 79, 216, 0.2) 55%,
     transparent 70%
   );
@@ -913,25 +946,79 @@ em {
   mix-blend-mode: screen;
 }
 
-/* Glowing top accent strip */
-.robot-card::before {
+/* Robot 1: Unitree R1 Air (Glacier Cyan & Deep Indigo) */
+.robot-card:nth-child(1) {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.09) 0%, rgba(0, 240, 255, 0.12) 35%, rgba(12, 19, 36, 0.85) 100%);
+  border-color: rgba(0, 240, 255, 0.25);
+}
+.robot-card:nth-child(1)::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--plasma-orchid), var(--plasma-violet), var(--laser-cyan));
-  opacity: 0.85;
+  background: linear-gradient(90deg, #00f0ff, #38bdf8, #818cf8);
+  opacity: 0.9;
   z-index: 7;
 }
+.robot-card:nth-child(1) .product-title > span {
+  color: #00f0ff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+}
+.robot-card:nth-child(1):hover {
+  border-color: rgba(0, 240, 255, 0.7);
+  box-shadow: 0 30px 80px rgba(0, 240, 255, 0.22), 0 0 30px rgba(56, 189, 248, 0.3);
+}
 
-.robot-card:hover {
-  border-color: rgba(75, 227, 255, 0.6);
-  box-shadow:
-    0 28px 75px rgba(10, 5, 25, 0.75),
-    0 0 35px rgba(180, 92, 255, 0.3),
-    0 0 15px rgba(75, 227, 255, 0.25);
+/* Robot 2: Unitree G1 EDU U9 (Neon Violet & Electric Orchid) */
+.robot-card:nth-child(2) {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.09) 0%, rgba(168, 85, 247, 0.14) 35%, rgba(22, 11, 40, 0.85) 100%);
+  border-color: rgba(168, 85, 247, 0.25);
+}
+.robot-card:nth-child(2)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #a855f7, #ec4899, #c084fc);
+  opacity: 0.9;
+  z-index: 7;
+}
+.robot-card:nth-child(2) .product-title > span {
+  color: #c084fc;
+  text-shadow: 0 0 10px rgba(192, 132, 252, 0.4);
+}
+.robot-card:nth-child(2):hover {
+  border-color: rgba(168, 85, 247, 0.7);
+  box-shadow: 0 30px 80px rgba(168, 85, 247, 0.25), 0 0 30px rgba(236, 72, 153, 0.3);
+}
+
+/* Robot 3: Humanoid Photo Booth Robot (Sunrise Amber & Coral Rose) */
+.robot-card:nth-child(3) {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.09) 0%, rgba(251, 146, 60, 0.13) 35%, rgba(30, 13, 26, 0.85) 100%);
+  border-color: rgba(251, 146, 60, 0.25);
+}
+.robot-card:nth-child(3)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #fb923c, #f43f5e, #ec4899);
+  opacity: 0.9;
+  z-index: 7;
+}
+.robot-card:nth-child(3) .product-title > span {
+  color: #fb923c;
+  text-shadow: 0 0 10px rgba(251, 146, 60, 0.4);
+}
+.robot-card:nth-child(3):hover {
+  border-color: rgba(251, 146, 60, 0.7);
+  box-shadow: 0 30px 80px rgba(251, 146, 60, 0.22), 0 0 30px rgba(244, 63, 94, 0.3);
 }
 
 .product-title {
@@ -961,11 +1048,12 @@ em {
   padding: 24px;
   margin: 24px 0;
   border-radius: 14px;
-  background: radial-gradient(circle at 50% 45%, #ffffff 0%, #f0f3f8 48%, #d3dde9 82%, #a8bbd2 100%);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: radial-gradient(circle at 50% 42%, #ffffff 0%, #f1f5f9 42%, #e2e8f0 78%, #cbd5e1 100%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
   box-shadow:
-    inset 0 0 25px rgba(26, 16, 51, 0.15),
-    0 12px 32px rgba(0, 0, 0, 0.4);
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 0 20px rgba(18, 10, 36, 0.1),
+    0 14px 36px rgba(0, 0, 0, 0.45);
   position: relative;
   overflow: hidden;
 }
@@ -1112,10 +1200,7 @@ details p {
    Section 03: Higher Education & Academic Research Deployments
    ========================================================================== */
 .edu-section {
-  background:
-    radial-gradient(circle at 85% 20%, rgba(180, 92, 255, 0.12), transparent 55%),
-    radial-gradient(circle at 15% 80%, rgba(75, 227, 255, 0.1), transparent 55%),
-    linear-gradient(180deg, #150d2c 0%, #1a1033 50%, #140b2b 100%);
+  background: var(--gradient-edu);
   position: relative;
   overflow: hidden;
 }
@@ -1128,13 +1213,13 @@ details p {
 }
 
 .stat-card {
-  background: rgba(30, 18, 58, 0.6);
-  border: 1px solid var(--line-medium);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(46, 229, 157, 0.08) 40%, rgba(14, 24, 38, 0.8) 100%);
+  border: 1px solid rgba(46, 229, 157, 0.25);
   border-radius: 18px;
   padding: 30px 24px;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
@@ -1147,14 +1232,14 @@ details p {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--laser-cyan), var(--plasma-orchid));
-  opacity: 0.7;
+  background: linear-gradient(90deg, #2ee59d, #00f0ff);
+  opacity: 0.85;
 }
 
 .stat-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(75, 227, 255, 0.5);
-  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.6), 0 0 22px rgba(75, 227, 255, 0.2);
+  border-color: rgba(46, 229, 157, 0.6);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 25px rgba(46, 229, 157, 0.25);
 }
 
 .stat-num {
@@ -1163,7 +1248,7 @@ details p {
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 1;
-  background: linear-gradient(135deg, #ffffff 40%, var(--laser-cyan) 100%);
+  background: linear-gradient(135deg, #ffffff 30%, #76ffd7 70%, #00f0ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 8px;
@@ -1193,12 +1278,13 @@ details p {
 }
 
 .edu-card {
-  background: var(--night-card);
-  border: 1px solid var(--line-medium);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.07) 0%, rgba(168, 85, 247, 0.1) 40%, rgba(16, 10, 32, 0.85) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 18px;
   padding: 32px 28px;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.16);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
   position: relative;
   overflow: hidden;
@@ -1211,13 +1297,13 @@ details p {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(180, 92, 255, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, #2ee59d, #a855f7, transparent);
 }
 
 .edu-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(180, 92, 255, 0.5);
-  box-shadow: 0 24px 60px rgba(10, 5, 25, 0.65), 0 0 28px rgba(255, 79, 216, 0.22);
+  border-color: rgba(168, 85, 247, 0.6);
+  box-shadow: 0 26px 65px rgba(0, 0, 0, 0.65), 0 0 30px rgba(168, 85, 247, 0.25);
 }
 
 .edu-card-icon {
@@ -1268,8 +1354,8 @@ details p {
 }
 
 .edu-banner {
-  background: linear-gradient(135deg, rgba(46, 26, 82, 0.85) 0%, rgba(20, 12, 38, 0.95) 100%);
-  border: 1px solid rgba(75, 227, 255, 0.3);
+  background: linear-gradient(135deg, rgba(46, 26, 82, 0.9) 0%, rgba(18, 25, 46, 0.92) 50%, rgba(16, 10, 32, 0.95) 100%);
+  border: 1px solid rgba(0, 240, 255, 0.35);
   border-radius: 20px;
   padding: 38px 42px;
   display: flex;
@@ -1278,7 +1364,7 @@ details p {
   gap: 36px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), inset 0 0 40px rgba(75, 227, 255, 0.08);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 0 40px rgba(0, 240, 255, 0.1);
 }
 
 .edu-banner::before {
@@ -1338,7 +1424,7 @@ details p {
    Section 06: Enterprise & Institutional Reliability Standards
    ========================================================================== */
 .standards-section {
-  background: linear-gradient(180deg, #150d2c 0%, #1a1033 100%);
+  background: var(--gradient-standards);
   position: relative;
 }
 
@@ -1350,21 +1436,21 @@ details p {
 }
 
 .standard-card {
-  background: var(--night-card);
-  border: 1px solid var(--line-medium);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.08) 0%, rgba(56, 189, 248, 0.09) 40%, rgba(14, 18, 34, 0.85) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.22);
   border-radius: 18px;
   padding: 32px 28px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
   position: relative;
 }
 
 .standard-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(75, 227, 255, 0.45);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 20px rgba(75, 227, 255, 0.15);
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.6), 0 0 24px rgba(56, 189, 248, 0.25);
 }
 
 .standard-icon {
@@ -1390,9 +1476,7 @@ details p {
    Section 03: Use Cases
    ========================================================================== */
 .use-section {
-  background:
-    radial-gradient(circle at 80% 25%, rgba(255, 79, 216, 0.12), transparent 50%),
-    linear-gradient(135deg, #241445 0%, #170d2f 100%);
+  background: var(--gradient-use);
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 10%;
@@ -1517,9 +1601,7 @@ details p {
    Section 04: Process
    ========================================================================== */
 .process {
-  background:
-    radial-gradient(circle at 20% 70%, rgba(180, 92, 255, 0.12), transparent 50%),
-    linear-gradient(180deg, #170d2f 0%, #1a1033 100%);
+  background: var(--gradient-process);
 }
 
 .process-grid {
@@ -1531,10 +1613,11 @@ details p {
 
 .process-grid article {
   padding: 34px 28px;
-  background: var(--night-card);
-  border: 1px solid var(--line-subtle);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.08) 0%, rgba(168, 85, 247, 0.1) 40%, rgba(18, 11, 38, 0.85) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 18px;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   position: relative;
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
@@ -1577,9 +1660,7 @@ details p {
   grid-template-columns: 1fr 1fr;
   gap: 10%;
   align-items: center;
-  background:
-    radial-gradient(circle at 75% 35%, rgba(180, 92, 255, 0.18), transparent 45%),
-    #1a1033;
+  background: var(--gradient-action);
 }
 
 .action-section p:not(.eyebrow) {
@@ -1603,10 +1684,7 @@ details p {
    Section: End Call To Action
    ========================================================================== */
 .end-cta {
-  background:
-    radial-gradient(ellipse at 80% 50%, rgba(255, 79, 216, 0.22), transparent 55%),
-    radial-gradient(ellipse at 20% 50%, rgba(75, 227, 255, 0.16), transparent 55%),
-    linear-gradient(125deg, #2a1654 0%, #3a1e70 50%, #1c1138 100%);
+  background: var(--gradient-end-cta);
   padding: 110px 7%;
   position: relative;
   overflow: hidden;
@@ -1614,11 +1692,11 @@ details p {
 }
 
 .end-cta::after {
-  content: "MACH BOTS";
+  content: "MACH ROBOTICS";
   position: absolute;
   right: -2%;
   bottom: -30px;
-  color: rgba(75, 227, 255, 0.05);
+  color: rgba(0, 240, 255, 0.05);
   font-size: clamp(66px, 15vw, 220px);
   font-weight: 900;
   letter-spacing: -0.08em;
@@ -1641,28 +1719,29 @@ details p {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  background: linear-gradient(125deg, var(--laser-cyan) 0%, var(--plasma-violet) 50%, var(--plasma-orchid) 100%);
-  color: #0f0722;
-  padding: 18px 30px;
+  background: linear-gradient(125deg, #00f0ff 0%, #a855f7 45%, #ff4fd8 75%, #fb923c 100%);
+  background-size: 240% auto;
+  color: #0a0518;
+  padding: 18px 32px;
   border: 0;
-  border-radius: 30px;
+  border-radius: 999px;
   min-height: 54px;
   font-size: 13px;
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   box-shadow:
-    0 10px 28px rgba(75, 227, 255, 0.3),
-    0 0 20px rgba(255, 79, 216, 0.2);
-  transition: all 0.25s ease;
+    0 10px 30px rgba(168, 85, 247, 0.4),
+    0 0 20px rgba(0, 240, 255, 0.25);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .button:hover {
-  background: linear-gradient(125deg, #ffffff 0%, var(--laser-cyan) 60%, var(--plasma-orchid) 100%);
-  color: #080315;
+  background-position: right center;
+  color: #ffffff;
   box-shadow:
-    0 14px 40px rgba(75, 227, 255, 0.45),
-    0 0 30px rgba(255, 79, 216, 0.35);
+    0 16px 45px rgba(168, 85, 247, 0.6),
+    0 0 35px rgba(0, 240, 255, 0.45);
   transform: translateY(-2px);
 }
 
@@ -1822,8 +1901,9 @@ footer a:hover {
   grid-template-columns: 1fr 1fr;
   gap: 10%;
   background:
-    radial-gradient(circle at 15% 30%, rgba(75, 227, 255, 0.1), transparent 50%),
-    #1a1033;
+    radial-gradient(circle at 15% 30%, rgba(0, 240, 255, 0.12), transparent 50%),
+    radial-gradient(circle at 85% 70%, rgba(168, 85, 247, 0.14), transparent 55%),
+    linear-gradient(135deg, #180d2e 0%, #0d081b 100%);
 }
 
 .contact-intro > p:not(.eyebrow) {
@@ -1866,12 +1946,13 @@ footer a:hover {
 }
 
 .brief-card {
-  background: var(--night-card);
-  border: 1px solid var(--line-medium);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.08) 0%, rgba(168, 85, 247, 0.1) 40%, rgba(18, 11, 38, 0.85) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 20px;
   padding: 42px;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 25px 60px rgba(10, 5, 25, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 25px 60px rgba(8, 4, 20, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 .brief-top {

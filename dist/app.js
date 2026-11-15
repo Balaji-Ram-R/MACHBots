@@ -96,7 +96,7 @@ if (form) {
     const models = { r1: 'Unitree R1 Air', g1: 'Unitree G1 EDU U9', photobot: 'Humanoid Photo Booth Robot', unsure: 'Please help me choose' };
     const topics = { rental: 'Rental and pricing', education: 'Academic and Research Deployment', customization: 'Customization', general: 'General query' };
     text.value = [
-      'Hello MACH Bots,',
+      'Hello MACH Robotics,',
       '',
       `I would like to discuss: ${topics[d.get('topic')]}`,
       `Robot: ${models[d.get('robot')]}`,
