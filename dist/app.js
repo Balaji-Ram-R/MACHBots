@@ -83,9 +83,9 @@ const form = document.querySelector('#enquiry-form');
 if (form) {
   const params = new URLSearchParams(location.search);
   const robot = params.get('robot');
-  if (['r1', 'g1'].includes(robot)) form.elements.robot.value = robot;
+  if (['r1', 'g1', 'photobot'].includes(robot)) form.elements.robot.value = robot;
   const topic = params.get('topic');
-  if (['rental', 'customization', 'general'].includes(topic)) form.elements.topic.value = topic;
+  if (['rental', 'education', 'customization', 'general'].includes(topic)) form.elements.topic.value = topic;
   const result = document.querySelector('#brief-result'),
     text = document.querySelector('#brief-text'),
     status = document.querySelector('#copy-status');
@@ -93,8 +93,8 @@ if (form) {
     e.preventDefault();
     if (!form.reportValidity()) return;
     const d = new FormData(form);
-    const models = { r1: 'Unitree R1 Air', g1: 'Unitree G1 EDU U9', unsure: 'Please help me choose' };
-    const topics = { rental: 'Rental and pricing', customization: 'Customization', general: 'General query' };
+    const models = { r1: 'Unitree R1 Air', g1: 'Unitree G1 EDU U9', photobot: 'Humanoid Photo Booth Robot', unsure: 'Please help me choose' };
+    const topics = { rental: 'Rental and pricing', education: 'Academic and Research Deployment', customization: 'Customization', general: 'General query' };
     text.value = [
       'Hello MACH Bots,',
       '',

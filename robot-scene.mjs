@@ -598,7 +598,111 @@ const initFloatInAnimations = () => {
     }
   }
 
-  // D. Process Steps: Sequential 3D Domino Float-In
+  // D. Academic Statistics Counter Elevation
+  const statCards = gsap.utils.toArray('.stat-card');
+  if (statCards.length) {
+    gsap.fromTo(
+      statCards,
+      {
+        y: 40,
+        opacity: 0,
+        scale: 0.92,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.9,
+        stagger: 0.12,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.edu-stats-grid',
+          start: 'top 86%',
+          toggleActions: 'play none none reverse',
+        },
+      }
+    );
+  }
+
+  // E. Academic Lab Feature Cards: 3D Elevation
+  const eduCards = gsap.utils.toArray('.edu-card');
+  if (eduCards.length) {
+    gsap.fromTo(
+      eduCards,
+      {
+        y: 55,
+        opacity: 0,
+        rotateX: 12,
+        transformOrigin: 'top center',
+      },
+      {
+        y: 0,
+        opacity: 1,
+        rotateX: 0,
+        duration: 1.05,
+        stagger: 0.14,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.edu-features-grid',
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+      }
+    );
+  }
+
+  // F. Academic Consultation Banner: Glow Expansion
+  const eduBanner = document.querySelector('.edu-banner');
+  if (eduBanner) {
+    gsap.fromTo(
+      eduBanner,
+      {
+        y: 45,
+        opacity: 0,
+        scale: 0.96,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 1.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: eduBanner,
+          start: 'top 88%',
+          toggleActions: 'play none none reverse',
+        },
+      }
+    );
+  }
+
+  // G. Reliability Standards Cards
+  const standardCards = gsap.utils.toArray('.standard-card');
+  if (standardCards.length) {
+    gsap.fromTo(
+      standardCards,
+      {
+        y: 50,
+        opacity: 0,
+        scale: 0.94,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.95,
+        stagger: 0.14,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.standards-grid',
+          start: 'top 86%',
+          toggleActions: 'play none none reverse',
+        },
+      }
+    );
+  }
+
+  // H. Process Steps: Sequential 3D Domino Float-In
   const processCards = gsap.utils.toArray('.process-grid article');
   if (processCards.length) {
     gsap.fromTo(
