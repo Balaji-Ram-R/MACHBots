@@ -358,14 +358,13 @@ em {
 
 .menu-toggle {
   display: none;
-  background: rgba(36, 22, 68, 0.6);
+  background: rgba(28, 20, 52, 0.92);
   border: 1px solid var(--line-cyan);
   border-radius: 20px;
   color: var(--laser-cyan);
   padding: 6px 14px;
   font-size: 12px;
   font-weight: 700;
-  backdrop-filter: blur(10px);
   transition: all 0.25s ease;
 }
 
@@ -483,12 +482,10 @@ em {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(18, 14, 38, 0.7);
+  background: rgba(20, 15, 42, 0.92);
   padding: 8px 18px;
   border-radius: 999px;
   border: 1px solid rgba(141, 185, 240, 0.28);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(141, 185, 240, 0.12);
   pointer-events: none;
 }
@@ -526,12 +523,10 @@ em {
 .hero-telemetry-badge {
   position: absolute;
   z-index: 5;
-  background: rgba(18, 14, 38, 0.72);
+  background: rgba(20, 15, 42, 0.92);
   border: 1px solid rgba(141, 185, 240, 0.22);
   border-radius: 14px;
   padding: 16px 20px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(141, 185, 240, 0.08);
   display: flex;
   flex-direction: column;
@@ -642,7 +637,6 @@ em {
   height: 100%;
   z-index: 2;
   touch-action: pan-y;
-  filter: drop-shadow(0 25px 35px rgba(10, 5, 25, 0.65));
 }
 
 .hero-label {
@@ -657,12 +651,10 @@ em {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(36, 22, 68, 0.65);
+  background: rgba(20, 15, 42, 0.92);
   padding: 8px 16px;
   border-radius: 999px;
   border: 1px solid var(--line-cyan);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   pointer-events: none;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
@@ -736,10 +728,8 @@ em {
   letter-spacing: 0.1em;
   padding: 8px 16px;
   border-radius: 999px;
-  background: rgba(18, 14, 38, 0.6);
+  background: rgba(20, 15, 42, 0.92);
   border: 1px solid rgba(141, 185, 240, 0.25);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   transition: all 0.25s ease;
 }
 
@@ -775,10 +765,8 @@ em {
   gap: 8px;
   padding: 8px 16px;
   border-radius: 999px;
-  background: rgba(18, 14, 38, 0.7);
+  background: rgba(20, 15, 42, 0.92);
   border: 1px solid rgba(141, 185, 240, 0.28);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   color: #8db9f0;
   font-size: 11px;
   font-weight: 700;
@@ -807,7 +795,7 @@ em {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(36, 22, 68, 0.65);
+  background: rgba(25, 18, 50, 0.92);
   border: 1px solid var(--line-medium);
   border-radius: 999px;
   color: var(--orchid-white);
@@ -815,8 +803,6 @@ em {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   transition: all 0.25s ease;
   white-space: nowrap;
@@ -915,12 +901,10 @@ em {
 
 .robot-card {
   position: relative;
-  background: linear-gradient(150deg, rgba(255, 255, 255, 0.08) 0%, rgba(141, 185, 240, 0.08) 40%, rgba(14, 11, 30, 0.82) 100%);
+  background: linear-gradient(150deg, rgba(28, 21, 56, 0.96) 0%, rgba(18, 13, 38, 0.97) 50%, rgba(11, 8, 25, 0.98) 100%);
   border: 1px solid rgba(141, 185, 240, 0.18);
   border-radius: 20px;
   padding: 34px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1218,12 +1202,10 @@ details p {
 }
 
 .stat-card {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(141, 185, 240, 0.08) 40%, rgba(14, 11, 30, 0.8) 100%);
+  background: linear-gradient(145deg, rgba(26, 19, 52, 0.96) 0%, rgba(18, 13, 38, 0.97) 50%, rgba(11, 8, 25, 0.98) 100%);
   border: 1px solid rgba(141, 185, 240, 0.22);
   border-radius: 18px;
   padding: 30px 24px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
@@ -1283,12 +1265,10 @@ details p {
 }
 
 .edu-card {
-  background: linear-gradient(150deg, rgba(255, 255, 255, 0.07) 0%, rgba(141, 185, 240, 0.08) 40%, rgba(14, 11, 30, 0.85) 100%);
+  background: linear-gradient(150deg, rgba(26, 19, 52, 0.96) 0%, rgba(18, 13, 38, 0.97) 50%, rgba(11, 8, 25, 0.98) 100%);
   border: 1px solid rgba(233, 232, 248, 0.16);
   border-radius: 18px;
   padding: 32px 28px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.16);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
   position: relative;
@@ -1441,12 +1421,10 @@ details p {
 }
 
 .standard-card {
-  background: linear-gradient(150deg, rgba(255, 255, 255, 0.08) 0%, rgba(56, 189, 248, 0.09) 40%, rgba(14, 18, 34, 0.85) 100%);
-  border: 1px solid rgba(56, 189, 248, 0.22);
+  background: linear-gradient(150deg, rgba(26, 19, 52, 0.96) 0%, rgba(18, 13, 38, 0.97) 50%, rgba(11, 8, 25, 0.98) 100%);
+  border: 1px solid rgba(141, 185, 240, 0.22);
   border-radius: 18px;
   padding: 32px 28px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
   position: relative;
@@ -1618,10 +1596,9 @@ details p {
 
 .process-grid article {
   padding: 34px 28px;
-  background: linear-gradient(150deg, rgba(255, 255, 255, 0.08) 0%, rgba(141, 185, 240, 0.08) 40%, rgba(14, 11, 30, 0.85) 100%);
+  background: linear-gradient(150deg, rgba(26, 19, 52, 0.96) 0%, rgba(18, 13, 38, 0.97) 50%, rgba(11, 8, 25, 0.98) 100%);
   border: 1px solid rgba(233, 232, 248, 0.16);
   border-radius: 18px;
-  backdrop-filter: blur(14px);
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.18);
   position: relative;
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
@@ -1951,12 +1928,10 @@ footer a:hover {
 }
 
 .brief-card {
-  background: linear-gradient(150deg, rgba(255, 255, 255, 0.08) 0%, rgba(141, 185, 240, 0.08) 40%, rgba(16, 12, 34, 0.85) 100%);
+  background: linear-gradient(150deg, rgba(26, 19, 52, 0.96) 0%, rgba(14, 10, 30, 0.98) 100%);
   border: 1px solid rgba(141, 185, 240, 0.22);
   border-radius: 20px;
   padding: 42px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 25px 60px rgba(8, 4, 20, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
@@ -2307,12 +2282,10 @@ html.lenis, html.lenis body {
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  background: rgba(36, 22, 68, 0.8);
+  background: rgba(36, 22, 68, 0.92);
   border: 1px solid var(--line-cyan);
   box-shadow: 0 0 35px rgba(141, 185, 240, 0.25), inset 0 0 20px rgba(233, 232, 248, 0.15);
   margin-bottom: 28px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 .osmo-icon-svg {
@@ -2463,9 +2436,7 @@ html.lenis, html.lenis body {
     top: 58px;
     left: 0;
     right: 0;
-    background: rgba(22, 14, 44, 0.96);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    background: rgba(22, 14, 44, 0.98);
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
     padding: 22px 6%;
     border-bottom: 1px solid var(--line-medium);
