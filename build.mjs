@@ -29,7 +29,7 @@ for (const [path,title,body,active] of [['/','Humanoid Robotics & Lab Solutions'
   await writeFile(file,document(title,body,active,path));
 }
 await writeFile('dist/robots.txt','User-agent: *\nDisallow: /\n');
-await writeFile('dist/_headers',`/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.spline.design; media-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; connect-src 'self' https://*.spline.design https://*.splinetool.com https://prod.spline.design blob: data:; worker-src 'self' blob:; frame-src 'none'; form-action 'self'\n`);
+await writeFile('dist/_headers',`/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.spline.design; media-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; connect-src 'self' https://*.spline.design https://*.splinetool.com https://prod.spline.design https://unpkg.com blob: data:; frame-src 'none'; form-action 'self'\n`);
 await copyFile('style-new.css','dist/style.css');
 try { await copyFile('app.js','dist/app.js'); } catch {}
 await bundle({entryPoints:['robot-scene.mjs'],outfile:'dist/scene.js',bundle:true,format:'esm',minify:true,splitting:false});
